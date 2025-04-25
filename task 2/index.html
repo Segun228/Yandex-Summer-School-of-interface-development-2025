@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Max Gap</title>
+    <style>
+        body {
+            font-size: 24px;
+        }
+
+        .cols {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .cols > div {
+            box-sizing: border-box;
+            width: 40px;
+            background-color: greenyellow;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        function solution(block){
+        let valueList = [];
+        const childrenList = block.children;
+        if(childrenList.length===0 || childrenList.length===1){
+            return 0;
+        }
+        for(const el of childrenList){
+            valueList.push(parseFloat(el.dataset.value));
+        }
+        valueList.sort((a, b) => a - b);
+        let maxDifference = 0;
+        for(let j=0; j<valueList.length-1; j++){
+            const difference = valueList[j+1] - valueList[j];
+            if(difference > maxDifference){
+                maxDifference = difference;
+            }
+        }
+        return maxDifference;
+}
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const block = document.querySelector('.cols');
+            const result = solution(block);
+            document.querySelector('#result').innerHTML = `Max gap = ${result}`;
+        });
+    </script>
+</head>
+<body>
+<div id="root">
+    <div class="cols">
+        <div data-value="20" style="height: 20px;" title="20">20</div>
+        <div data-value="150" style="height: 150px;" title="150">150</div>
+        <div data-value="60" style="height: 60px;" title="60">60</div>
+        <div data-value="40" style="height: 40px;" title="40">40</div>
+        <div data-value="80" style="height: 80px;" title="80">80</div>
+        <div data-value="120" style="height: 120px;" title="120">120</div>
+        <div data-value="100" style="height: 100px;" title="100">100</div>
+        <div data-value="50" style="height: 50px;" title="50">50</div>
+    </div>
+    <h2 id="result"></h2>
+</div>
+</body>
+</html>
